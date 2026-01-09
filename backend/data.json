@@ -1,1 +1,28 @@
+{
+  "resources": [
+    {
+      "title": "Python Basics",
+      "category": "Engineering",
+      "link": "https://example.com"
+    },
+    {
+      "title": "Web Development Roadmap",
+      "category": "Coding",
+      "link": "https://example.com"
+    }
+  ],
+  "colleges": [
+    {
+      "name": "AP Shah Institute of Technology",
+      "events": [
+        {
+          "title": "Tech Fest",
+          "date": "2026-01-20",
+          "time": "10:00 AM",
+          "venue": "Main Auditorium"
+        }
+      ]
+    }
+  ]
+}
 
