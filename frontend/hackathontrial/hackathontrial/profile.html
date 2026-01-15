@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Profile — Eduflow</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="js/icons/logo.svg" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-row">
+        <a class="brand" href="index.html"
+          ><img src="js/icons/logo.svg" alt="logo" class="logo" />Eduflow</a
+        >
+        <nav class="main-nav" id="mainNav">
+          <a href="index.html">Home</a>
+          <a href="hubs.html">Hubs</a>
+          <a href="events.html">Events</a>
+          <a href="profile.html">Profile</a>
+        </nav>
+        <button
+          id="navToggle"
+          class="nav-toggle"
+          aria-label="Toggle navigation"
+        >
+          ☰
+        </button>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="profile-container">
+        <div class="profile-header">
+          <div id="profileInfo" class="profile-info"></div>
+          <button id="logoutBtn" class="btn ghost">Logout</button>
+        </div>
+
+        <div class="profile-stats">
+          <div class="stat-card">
+            <h3>Completed Lectures</h3>
+            <p class="stat-number" id="completedCount">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Total Progress</h3>
+            <p class="stat-number" id="progressPercent">0%</p>
+          </div>
+        </div>
+
+        <div class="profile-section">
+          <h2>Your Progress</h2>
+          <div id="completedLectures" class="completed-list"></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container"><p>© Eduflow</p></div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/profile.js"></script>
+  </body>
+</html>

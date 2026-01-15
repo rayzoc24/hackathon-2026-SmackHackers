@@ -1,1 +1,5 @@
-
+Flask==2.3.0
+Flask-CORS==4.0.0
+authlib==1.2.0
+requests
+python-dotenv==2.31.0

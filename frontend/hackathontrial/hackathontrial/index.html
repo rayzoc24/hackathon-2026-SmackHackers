@@ -56,7 +56,7 @@
               <a class="btn ghost" href="events.html">View Events</a>
             </div>
             <div class="features-grid">
-              <div class="feature">
+              <a href="hubs.html" class="feature feature-link">
                 <img
                   src="js/icons/hub.svg"
                   alt="resources"
@@ -66,8 +66,8 @@
                   <h3>Resources</h3>
                   <p>Guides, tools and community-curated materials.</p>
                 </div>
-              </div>
-              <div class="feature">
+              </a>
+              <a href="events.html" class="feature feature-link">
                 <img
                   src="js/icons/event.svg"
                   alt="events"
@@ -79,8 +79,8 @@
                     Workshops, talks, and socials — all listed with date & time.
                   </p>
                 </div>
-              </div>
-              <div class="feature">
+              </a>
+              <a href="colleges.html" class="feature feature-link">
                 <img
                   src="js/icons/college.svg"
                   alt="communities"
@@ -90,7 +90,7 @@
                   <h3>Communities</h3>
                   <p>Find peers who share your interests across campus.</p>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
           <div class="hero-visual">
@@ -108,5 +108,28 @@
 
     <script src="js/data.js"></script>
     <script src="js/common.js"></script>
+    <script>
+      // Handle Google login redirect
+      const urlParams = new URLSearchParams(window.location.search);
+      const loginStatus = urlParams.get('login');
+      const userEmail = urlParams.get('email');
+      const userName = urlParams.get('name');
+      const userPicture = urlParams.get('picture');
+      
+      if (loginStatus === 'success' && userEmail) {
+        // Store user info
+        const userInfo = {
+          email: decodeURIComponent(userEmail),
+          name: userName ? decodeURIComponent(userName) : 'Student',
+          picture: userPicture ? decodeURIComponent(userPicture) : '',
+          loginDate: new Date().toISOString()
+        };
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        
+        // Show success message and redirect to profile
+        alert('Successfully logged in with Google!');
+        window.location.href = 'profile.html';
+      }
+    </script>
   </body>
 </html>

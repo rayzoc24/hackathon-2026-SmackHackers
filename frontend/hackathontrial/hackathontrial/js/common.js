@@ -6,6 +6,17 @@ document.addEventListener("DOMContentLoaded", function () {
     navToggle.addEventListener("click", () => mainNav.classList.toggle("open"));
   }
 
+  // Update navigation based on login status
+  const userInfo = localStorage.getItem("userInfo");
+  const navLinks = mainNav ? mainNav.querySelectorAll("a") : [];
+  
+  navLinks.forEach((link) => {
+    if (link.getAttribute("href") === "login.html" && userInfo) {
+      link.setAttribute("href", "profile.html");
+      link.textContent = "Profile";
+    }
+  });
+
   // Load dev self-test harness when ?selftest=1
   if (qs("selftest") === "1") {
     const s = document.createElement("script");

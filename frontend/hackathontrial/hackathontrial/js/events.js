@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const grid = document.getElementById("eventsGrid");
   const title = document.getElementById("eventsTitle");
   const dateFilter = document.getElementById("dateFilter");
+  const collegeFilter = document.getElementById("collegeFilter");
   const clearBtn = document.getElementById("clearFilter");
   if (!grid || !window.APP) return;
   function computeEmbedUrl(url) {
@@ -44,9 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const hubs = APP.data.hubs || [];
     const hubObj = hubs.find((h) => h.id === hubParam);
 
-    // If the hub has a configured video, show a clickable tile that opens YouTube
-    if (hubObj && hubObj.video) {
-      if (title) title.textContent = `Videos — ${hubObj.name}`;
+    // If the hub has lectures, show them with completion buttons
+    if (hubObj && hubObj.lectures && hubObj.lectures.length > 0) {
+      if (title) title.textContent = `Lectures — ${hubObj.name}`;
       const controlsEl = document.querySelector(".controls");
       if (controlsEl) controlsEl.style.display = "none";
 
@@ -61,56 +62,75 @@ document.addEventListener("DOMContentLoaded", function () {
         return m ? m[1] : null;
       }
 
-      const vid = getYouTubeId(hubObj.video);
-      const thumb = vid
-        ? `https://img.youtube.com/vi/${vid}/hqdefault.jpg`
-        : "js/icons/event.svg";
-
       grid.innerHTML = `
-        <div class="hub-video" style="max-width:1100px;margin:0 auto;padding:8px;">
-          <div style="display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div class="hub-lectures" style="max-width:1100px;margin:0 auto;padding:8px;">
+          <div style="display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:20px;">
             <div>
               <h2 style="margin:0">${hubObj.name}</h2>
               <p class="muted" style="margin:4px 0 0 0">${hubObj.desc || ""}</p>
             </div>
-            <div style="display:flex;gap:8px;align-items:center">
-              <a id="openOnYT" class="btn" href="${
-                hubObj.video
-              }" target="_blank" rel="noopener">Open on YouTube</a>
-              <a href="hubs.html" class="btn ghost">Back</a>
-            </div>
+            <a href="hubs.html" class="btn ghost">Back</a>
           </div>
 
-          <div class="video-tiles" style="display:flex;flex-direction:column;gap:16px;">
-            <a class="video-tile card clickable" href="${
-              hubObj.video
-            }" target="_blank" rel="noopener" aria-label="Open ${
-        hubObj.name
-      } video on YouTube" style="text-decoration:none;color:inherit;display:flex;gap:12px;border-radius:8px;overflow:hidden;border:1px solid rgba(37,99,235,0.08);align-items:stretch;min-height:160px;">
-              <div style="padding:16px;background:#f8fbff;flex:1;">
-                <h3 style="margin:0 0 6px 0;color:#111;">${hubObj.name} — ${
-        hubObj.videoLabel || "Tutorial"
-      }</h3>
-                <p style="margin:0;font-size:13px;color:#374151;">Click to open the full tutorial on YouTube.</p>
-              </div>
-              <div style="flex:0 0 220px;max-width:220px;height:100%;overflow:hidden;">
-                <img src="${thumb}" alt="${
-        hubObj.name
-      } thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;">
-              </div>
-            </a>
-          </div>
+          <div class="lecture-list" id="lectureList"></div>
         </div>
       `;
 
-      // Make the tile keyboard-accessible (Enter/Space)
-      const tile = grid.querySelector(".video-tile");
-      if (tile) {
-        tile.setAttribute("tabindex", "0");
-        tile.addEventListener("keyup", (e) => {
-          if (e.key === "Enter" || e.key === " ") tile.click();
+      const lectureList = grid.querySelector("#lectureList");
+      const completedLectures = JSON.parse(localStorage.getItem("completedLectures") || "{}");
+
+      hubObj.lectures.forEach((lecture) => {
+        const lectureId = `lecture-${hubObj.id}-${lecture.id}`;
+        const isCompleted = completedLectures[lectureId];
+        const vid = getYouTubeId(lecture.url);
+        const thumb = vid
+          ? `https://img.youtube.com/vi/${vid}/hqdefault.jpg`
+          : "js/icons/event.svg";
+
+        const lectureWrapper = document.createElement("div");
+        lectureWrapper.className = "lecture-item";
+
+        const lectureCard = document.createElement("a");
+        lectureCard.href = lecture.url;
+        lectureCard.target = "_blank";
+        lectureCard.rel = "noopener";
+        lectureCard.className = "lecture-card";
+        lectureCard.innerHTML = `
+          <img src="${thumb}" alt="${lecture.title} thumbnail" class="lecture-thumbnail">
+          <div class="lecture-info">
+            <h3>${lecture.title}</h3>
+            <p class="muted" style="margin:4px 0 0 0;">Click to watch on YouTube</p>
+          </div>
+        `;
+
+        const completeBtn = document.createElement("button");
+        completeBtn.className = "btn-complete";
+        completeBtn.textContent = isCompleted ? "✓ Completed" : "Mark Done";
+        if (isCompleted) completeBtn.classList.add("completed");
+
+        completeBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const completedLectures = JSON.parse(localStorage.getItem("completedLectures") || "{}");
+
+          if (completedLectures[lectureId]) {
+            delete completedLectures[lectureId];
+            completeBtn.textContent = "Mark Done";
+            completeBtn.classList.remove("completed");
+          } else {
+            completedLectures[lectureId] = true;
+            completeBtn.textContent = "✓ Completed";
+            completeBtn.classList.add("completed");
+          }
+
+          localStorage.setItem("completedLectures", JSON.stringify(completedLectures));
         });
-      }
+
+        lectureWrapper.appendChild(lectureCard);
+        lectureWrapper.appendChild(completeBtn);
+        lectureList.appendChild(lectureWrapper);
+      });
 
       return; // don't render events
     }
@@ -153,17 +173,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
   render(events);
 
+  // Populate college filter dropdown
+  if (collegeFilter) {
+    const colleges = APP.data.colleges || [];
+    colleges.forEach((col) => {
+      const option = document.createElement("option");
+      option.value = col.name;
+      option.textContent = col.name;
+      collegeFilter.appendChild(option);
+    });
+
+    // Add college filter event listener
+    collegeFilter.addEventListener("change", () => {
+      applyFilters();
+    });
+  }
+
+  function applyFilters() {
+    let filtered = events;
+
+    // Filter by college
+    const selectedCollege = collegeFilter ? collegeFilter.value : "";
+    if (selectedCollege) {
+      filtered = filtered.filter(
+        (e) => e.college === selectedCollege || e.college === "All Colleges"
+      );
+    }
+
+    // Filter by date
+    const selectedDate = dateFilter ? dateFilter.value : "";
+    if (selectedDate) {
+      filtered = filtered.filter((e) => e.date === selectedDate);
+    }
+
+    render(filtered);
+  }
+
   if (dateFilter) {
     dateFilter.addEventListener("change", () => {
-      const v = dateFilter.value; // YYYY-MM-DD
-      if (!v) return render(events);
-      const filtered = events.filter((e) => e.date === v);
-      render(filtered);
+      applyFilters();
     });
   }
   if (clearBtn) {
     clearBtn.addEventListener("click", () => {
-      dateFilter.value = "";
+      if (dateFilter) dateFilter.value = "";
+      if (collegeFilter) collegeFilter.value = "";
       render(events);
     });
   }
