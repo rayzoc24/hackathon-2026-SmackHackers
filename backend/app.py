@@ -37,12 +37,12 @@ def auth_google_callback():
             email = quote(user.get('email', ''))
             name = quote(user.get('name', 'Student'))
             picture = quote(user.get('picture', ''))
-            return redirect(f'https://eduflo.netlify.app/hackathontrial/index.html?login=success&email={email}&name={name}&picture={picture}')
+            return redirect(f'https://eduflo.netlify.app/?login=success&email={email}&name={name}&picture={picture}')
         else:
-            return redirect('https://eduflo.netlify.app/hackathontrial/login.html?error=no_user_info')
+            return redirect('https://eduflo.netlify.app/?error=no_user_info')
     except Exception as e:
         print(f"Error during Google callback: {e}")
-        return redirect('https://eduflo.netlify.app/hackathontrial/login.html?error=auth_failed')
+        return redirect('https://eduflo.netlify.app/?error=auth_failed')
 
 @app.route('/api/user', methods=['GET'])
 def get_user():
@@ -52,7 +52,7 @@ def get_user():
 @app.route('/logout')
 def logout():
     session.pop('user', None)
-    return redirect('https://eduflo.netlify.app/hackathontrial/index.html')
+    return redirect('https://eduflo.netlify.app/')
 
 if __name__ == '__main__':
     app.run(debug=True)
