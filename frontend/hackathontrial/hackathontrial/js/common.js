@@ -1,4 +1,23 @@
 // Common utilities for navigation and helpers
+
+function updateNavigation() {
+  const userInfo = localStorage.getItem("userInfo");
+  const mainNav = document.getElementById("mainNav");
+  const navLinks = mainNav ? mainNav.querySelectorAll("a") : [];
+  
+  navLinks.forEach((link) => {
+    if (link.getAttribute("href") === "login.html") {
+      if (userInfo) {
+        link.setAttribute("href", "profile.html");
+        link.textContent = "Profile";
+      } else {
+        link.setAttribute("href", "login.html");
+        link.textContent = "Login";
+      }
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const navToggle = document.getElementById("navToggle");
   const mainNav = document.getElementById("mainNav");
@@ -7,13 +26,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Update navigation based on login status
-  const userInfo = localStorage.getItem("userInfo");
-  const navLinks = mainNav ? mainNav.querySelectorAll("a") : [];
-  
-  navLinks.forEach((link) => {
-    if (link.getAttribute("href") === "login.html" && userInfo) {
-      link.setAttribute("href", "profile.html");
-      link.textContent = "Profile";
+  updateNavigation();
+
+  // Listen for changes to localStorage (e.g., from other tabs)
+  window.addEventListener("storage", (event) => {
+    if (event.key === "userInfo") {
+      updateNavigation();
     }
   });
 
