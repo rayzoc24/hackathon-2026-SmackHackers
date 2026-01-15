@@ -6,12 +6,12 @@ function updateNavigation() {
   const navLinks = mainNav ? mainNav.querySelectorAll("a") : [];
   
   navLinks.forEach((link) => {
-    if (link.getAttribute("href") === "login.html") {
+    if (link.textContent.trim() === "Login" || link.getAttribute("href") === "login.html") {
       if (userInfo) {
-        link.setAttribute("href", "profile.html");
+        link.setAttribute("href", "/profile.html");
         link.textContent = "Profile";
       } else {
-        link.setAttribute("href", "login.html");
+        link.setAttribute("href", "/login.html");
         link.textContent = "Login";
       }
     }
@@ -28,12 +28,17 @@ document.addEventListener("DOMContentLoaded", function () {
   // Update navigation based on login status
   updateNavigation();
 
-  // Listen for changes to localStorage (e.g., from other tabs)
+  // Listen for changes to localStorage (from other tabs)
   window.addEventListener("storage", (event) => {
     if (event.key === "userInfo") {
       updateNavigation();
     }
   });
+
+  // Also check localStorage periodically in case the page doesn't have the latest info
+  setInterval(() => {
+    updateNavigation();
+  }, 500);
 
   // Load dev self-test harness when ?selftest=1
   if (qs("selftest") === "1") {
