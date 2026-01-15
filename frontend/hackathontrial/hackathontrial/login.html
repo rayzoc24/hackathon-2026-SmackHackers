@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Login — Eduflow</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-row">
+        <a class="brand" href="index.html"
+          ><img src="js/icons/logo.svg" alt="logo" class="logo" />Eduflow</a
+        >
+        <nav class="main-nav" id="mainNav">
+          <a href="index.html">Home</a>
+          <a href="hubs.html">Hubs</a>
+          <a href="events.html">Events</a>
+          <a href="login.html">Login</a>
+        </nav>
+        <button
+          id="navToggle"
+          class="nav-toggle"
+          aria-label="Toggle navigation"
+        >
+          ☰
+        </button>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="auth-card">
+        <h1 class="center">Welcome back</h1>
+        <p class="center muted">
+          Sign in to access hubs, events and community resources. (Demo only)
+        </p>
+        <form
+          class="form"
+          onsubmit="event.preventDefault(); alert('Demo: login submitted');"
+        >
+          <label
+            >Student Email
+            <input type="email" placeholder="you@college.edu" required />
+          </label>
+          <label
+            >Password
+            <input type="password" placeholder="••••••" required />
+          </label>
+          <div class="form-actions">
+            <button class="btn">Login</button>
+            <a class="btn ghost" href="index.html">Back</a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container"><p>© Eduflow</p></div>
+    </footer>
+
+    <script src="js/common.js"></script>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Eduflow</title>
+    <link rel="stylesheet" href="styles.css" />
+    <meta
+      name="description"
+      content="Student Resource Hub and Events Platform - landing page"
+    />
+    <link rel="icon" href="js/icons/logo.svg" />
+    <style>
+      .title-light {
+        color: #fff !important;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-row">
+        <a class="brand" href="index.html"
+          ><img src="js/icons/logo.svg" alt="logo" class="logo" />Eduflow</a
+        >
+        <nav class="main-nav" id="mainNav">
+          <a href="index.html">Home</a>
+          <a href="hubs.html">Hubs</a>
+          <a href="events.html">Events</a>
+          <a href="login.html">Login</a>
+        </nav>
+        <button
+          id="navToggle"
+          class="nav-toggle"
+          aria-label="Toggle navigation"
+        >
+          ☰
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-card">
+            <h1>
+              <span class="title-light"
+                >Student Resource Hub & Events Explorer</span
+              >
+            </h1>
+            <p class="lead">
+              Find communities, discover resources, and never miss a campus
+              event. Built for students — fast and friendly.
+            </p>
+            <div class="hero-actions">
+              <a class="btn" href="hubs.html">Explore Hubs</a>
+              <a class="btn ghost" href="events.html">View Events</a>
+            </div>
+            <div class="features-grid">
+              <div class="feature">
+                <img
+                  src="js/icons/hub.svg"
+                  alt="resources"
+                  style="width: 40px; height: 40px"
+                />
+                <div>
+                  <h3>Resources</h3>
+                  <p>Guides, tools and community-curated materials.</p>
+                </div>
+              </div>
+              <div class="feature">
+                <img
+                  src="js/icons/event.svg"
+                  alt="events"
+                  style="width: 40px; height: 40px"
+                />
+                <div>
+                  <h3>Events</h3>
+                  <p>
+                    Workshops, talks, and socials — all listed with date & time.
+                  </p>
+                </div>
+              </div>
+              <div class="feature">
+                <img
+                  src="js/icons/college.svg"
+                  alt="communities"
+                  style="width: 40px; height: 40px"
+                />
+                <div>
+                  <h3>Communities</h3>
+                  <p>Find peers who share your interests across campus.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <img src="js/icons/event.svg" alt="events illustration" />
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© Eduflow</p>
+      </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/common.js"></script>
+  </body>
+</html>
