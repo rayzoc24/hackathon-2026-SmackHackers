@@ -8,7 +8,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here')
-CORS(app, supports_credentials=True, origins=['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5500', 'http://127.0.0.1:5500'])
+CORS(app, supports_credentials=True, origins=['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5500', 'http://127.0.0.1:5500', 'https://eduflow-backend-fjtz.onrender.com', 'https://eduflo.netlify.app'])
 
 oauth = OAuth(app)
 
@@ -37,12 +37,12 @@ def auth_google_callback():
             email = quote(user.get('email', ''))
             name = quote(user.get('name', 'Student'))
             picture = quote(user.get('picture', ''))
-            return redirect(f'http://localhost:5500/hackathontrial/index.html?login=success&email={email}&name={name}&picture={picture}')
+            return redirect(f'https://eduflo.netlify.app/hackathontrial/index.html?login=success&email={email}&name={name}&picture={picture}')
         else:
-            return redirect('http://localhost:5500/hackathontrial/login.html?error=no_user_info')
+            return redirect('https://eduflo.netlify.app/hackathontrial/login.html?error=no_user_info')
     except Exception as e:
         print(f"Error during Google callback: {e}")
-        return redirect('http://localhost:3000/hackathontrial/login.html?error=auth_failed')
+        return redirect('https://eduflo.netlify.app/hackathontrial/login.html?error=auth_failed')
 
 @app.route('/api/user', methods=['GET'])
 def get_user():
@@ -52,7 +52,7 @@ def get_user():
 @app.route('/logout')
 def logout():
     session.pop('user', None)
-    return redirect('http://localhost:5500/hackathontrial/index.html')
+    return redirect('https://eduflo.netlify.app/hackathontrial/index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
