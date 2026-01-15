@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="eventTitle">
+  <title id="eventTitle">Events icon - badge</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563eb" />
+      <stop offset="1" stop-color="#60a5fa" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="transparent" />
+  <!-- Badge circle -->
+  <g transform="translate(8,6)">
+    <circle cx="24" cy="18" r="18" fill="url(#bg)" />
+    <!-- Ribbon -->
+    <path d="M12 34 L18 26 L24 34 L30 26 L36 34 L24 24 Z" fill="#ffefc6" opacity="0.95" transform="translate(-6,6)" />
+    <!-- Star -->
+    <polygon points="24,8 26.8,15.6 34.8,15.6 28.5,20 31.3,27.6 24,22.4 16.7,27.6 19.5,20 13.2,15.6 21.2,15.6" fill="#fff" />
+  </g>
+</svg>
