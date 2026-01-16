@@ -41,7 +41,7 @@ opencampus-hub/
 
 ## Team
 
-- Shree — Team Lead & Integration
+- Shreeyash — Team Lead & Integration
 - Ujjwal — Frontend Development
 - Shreeram — Backend Development
 - Vedika — UX, Content & Documentation
